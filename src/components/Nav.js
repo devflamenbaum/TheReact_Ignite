@@ -1,20 +1,37 @@
-import React from 'react';
+import React,{useState} from 'react';
 //Animation
 import styled from 'styled-components';
 import {motion} from 'framer-motion';
 import logo from '../img/logo.svg';
+//Redux and Route
+import {fetchSearch,clearSearch} from '../actions/gamesAction';
+import {useDispatch} from 'react-redux';
+
 
 const Nav = () => {
+    const dispatch = useDispatch();
+    const [textInput, setTextInput] = useState("");
+    const inputHandler = (e) => {
+        setTextInput(e.target.value);
+    }
+    const submitSearch = (e) =>{
+        e.preventDefault();
+        dispatch(fetchSearch(textInput))
+        setTextInput("");
+    }
+    const clearSearchDispatch = () =>{
+        dispatch(clearSearch())
+    }
     return(
         <StyledNav>
-            <Logo>
+            <Logo onClick={clearSearchDispatch}>
                 <img src={logo} alt="brand" />
                 <h1>Ignite</h1>
             </Logo>
-            <div className="search">
-                <input type="text" />
-                <button>Search</button>
-            </div>
+            <form className="search">
+                <input value={textInput} onChange={inputHandler} type="text" />
+                <button onClick={submitSearch} type="submit">Search</button>
+            </form>
         </StyledNav>
     );
 }
