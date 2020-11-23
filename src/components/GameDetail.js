@@ -14,6 +14,9 @@ import gamepad from '../img/gamepad.svg';
 import apple from '../img/apple.svg';
 import steam from '../img/steam.svg';
 import xbox from '../img/xbox.svg';
+//Import Stars
+import starEmpty from '../img/star-empty.png';
+import starFull from '../img/star-full.png';
 
 
 const GameDetail = ({pathId}) =>{
@@ -25,6 +28,19 @@ const GameDetail = ({pathId}) =>{
             document.body.style.overflow = 'auto';
             history.push('/')
         }
+    }
+    // Rating Logic
+    const getStars = () =>{
+        const stars = [];
+        const rating = Math.floor(game.rating);
+        for(let i= 1; i<=5; i++){
+            if(i<=rating){
+                stars.push(<img alt="star" src={starFull} key={i}></img>)
+            }else{
+                stars.push(<img alt="star Empty" src={starEmpty} key={i}></img>)
+            }
+        }
+        return stars;
     }
     //Get platform image
     const getPlatform = (platform) =>{
@@ -45,6 +61,7 @@ const GameDetail = ({pathId}) =>{
                 return gamepad;
         }
     }
+
     //Data
     const {screen,game,isLoading} = useSelector((state) => state.detail)
     return(
@@ -56,6 +73,7 @@ const GameDetail = ({pathId}) =>{
                     <div className="rating">
                         <motion.h3 layoutId={`title ${pathId}`}>{game.name}</motion.h3>
                         <p>Rating : {game.rating}</p>
+                        {getStars()}
                     </div>
                     <Info>
                         <h3>Platforms</h3>
@@ -122,6 +140,11 @@ const Stats = styled(motion.div)`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    img{
+        width: 2rem;
+        height: 2rem;
+        display: inline;
+    }
 `
 
 const Info = styled(motion.div)`
