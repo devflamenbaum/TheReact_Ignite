@@ -6,6 +6,8 @@ import logo from '../img/logo.svg';
 //Redux and Route
 import {fetchSearch,clearSearch} from '../actions/gamesAction';
 import {useDispatch} from 'react-redux';
+//Animations
+import {fadeIn} from '../animations';
 
 
 const Nav = () => {
@@ -23,7 +25,7 @@ const Nav = () => {
         dispatch(clearSearch())
     }
     return(
-        <StyledNav>
+        <StyledNav variants={fadeIn} initial="hidden" animate="show">
             <Logo onClick={clearSearchDispatch}>
                 <img src={logo} alt="brand" />
                 <h1>Ignite</h1>
